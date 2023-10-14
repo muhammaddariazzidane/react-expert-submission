@@ -1,3 +1,4 @@
+import { Flex } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 export default function NavItem(props) {
@@ -5,28 +6,41 @@ export default function NavItem(props) {
 
   return (
     <>
-      <li>
-        <Link
-          to={'/'}
-          className={`flex items-center rounded-md  ${
-            location.pathname == '/' ? 'active shadow  ' : null
-          }`}
+      <Link to={'/'}>
+        <Flex
+          alignItems={'center'}
+          bg={`${location.pathname == '/' ? 'gray.800' : null}`}
+          color={`${location.pathname == '/' ? 'white' : 'black'}`}
+          w={'fit-content'}
+          p={2}
+          justify={'center'}
+          mx={'auto'}
+          rounded={'md'}
+          gap={2}
         >
-          <PiChatsDuotone size={22} color="green" />
+          <PiChatsDuotone
+            size={22}
+            color={`${location.pathname == '/' ? 'lightgreen' : 'green'}`}
+          />
           Threads
-        </Link>
-      </li>
-      <li>
-        <Link
-          to={'/leaderboard'}
-          className={`flex items-center rounded-md ${
-            location.pathname == '/leaderboard' ? 'active shadow ' : null
-          }`}
+        </Flex>
+      </Link>
+      <Link to={'/leaderboard'}>
+        <Flex
+          alignItems={'center'}
+          justify={'center'}
+          gap={2}
+          mx={'auto'}
+          bg={`${location.pathname == '/leaderboard' ? 'gray.800' : null}`}
+          color={`${location.pathname == '/leaderboard' ? 'white' : 'black'}`}
+          w={'fit-content'}
+          rounded={'md'}
+          p={2}
         >
           <GiCrenelCrown size={22} color="red" />
           Leaderboard
-        </Link>
-      </li>
+        </Flex>
+      </Link>
     </>
   );
 }

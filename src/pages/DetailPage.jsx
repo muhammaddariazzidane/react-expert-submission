@@ -10,6 +10,7 @@ import Comments from '../components/Comments';
 import ThreadDetail from '../components/ThreadDetail';
 import Layout from '../layouts/Layout';
 import PropTypes from 'prop-types';
+import { Box, Container } from '@chakra-ui/react';
 
 function DetailPage({ authUser }) {
   const { id } = useParams();
@@ -32,9 +33,9 @@ function DetailPage({ authUser }) {
 
   return (
     <Layout>
-      <div className="max-w-3xl mb-14 px-6 w-full py-4 mx-auto">
+      <Container maxW={'container.md'} mb={12} py={4} px={6} mx={'auto'}>
         <ThreadDetail thread={threadDetail} />
-        <div className="my-3 shadow rounded-md">
+        <Box my={3} shadow={'md'} rounded={'full'}>
           <CreateCommentForm
             handleSubmit={(e) => {
               e.preventDefault();
@@ -46,9 +47,9 @@ function DetailPage({ authUser }) {
             }}
             commentTextareaRef={commentTextareaRef}
           />
-        </div>
+        </Box>
         <Comments comments={threadDetail.comments} authUser={authUser} />
-      </div>
+      </Container>
     </Layout>
   );
 }

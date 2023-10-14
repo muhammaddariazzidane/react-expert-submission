@@ -1,5 +1,6 @@
 import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 import { useDispatch, useSelector } from 'react-redux';
+import { Box, Container, Flex, Heading } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import LeaderboardCard from '../components/elements/card/LeaderboardCard';
 import Layout from '../layouts/Layout';
@@ -14,12 +15,25 @@ export default function LeaderboardPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen  max-w-lg mx-auto">
-        <div className="mb-12 min-h-screen">
-          <h1 className="text-center text-3xl font-semibold my-8">
+      <Container maxW={'container.sm'}>
+        <Box mb={10} minH={'full'}>
+          <Heading
+            as={'h1'}
+            fontSize={'3xl'}
+            fontWeight={'semibold'}
+            textAlign={'center'}
+            my={8}
+          >
             Top Leaderboards
-          </h1>
-          <div className="w-full flex p-4 gap-4  flex-col rounded-md shadow">
+          </Heading>
+          <Flex
+            w={'full'}
+            flexDir={'column'}
+            gap={4}
+            rounded={'md'}
+            shadow={'md'}
+            p={4}
+          >
             {leaderboards?.map((leaderboard, index) => (
               <LeaderboardCard
                 key={leaderboard.user.id}
@@ -27,9 +41,9 @@ export default function LeaderboardPage() {
                 leaderboard={leaderboard}
               />
             ))}
-          </div>
-        </div>
-      </div>
+          </Flex>
+        </Box>
+      </Container>
     </Layout>
   );
 }

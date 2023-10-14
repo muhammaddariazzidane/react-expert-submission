@@ -1,5 +1,17 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  IconButton,
+  Input,
+  Select,
+  Text,
+  Textarea,
+} from '@chakra-ui/react';
+import PropTypes from 'prop-types';
+
 export default function CreateForm({ MdOutlineEmojiEmotions, addThread }) {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -14,50 +26,65 @@ export default function CreateForm({ MdOutlineEmojiEmotions, addThread }) {
     setCategory('');
   };
   return (
-    <form method="POST" className="w-full">
-      <div className="form-control">
-        <input
-          type="text"
+    <Box w={'full'} display={'flex'} flexDir={'column'} gap={2}>
+      <FormControl isRequired>
+        <Input
+          type={'text'}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="input w-full input-bordered placeholder:p-1 placeholder:text-lg border-t-0 border-x-0 rounded-none focus:outline-none border-b"
-          placeholder="Title discussion"
+          placeholder={'Title discussion'}
         />
-      </div>
-      <div className="form-control">
-        <textarea
+      </FormControl>
+      <FormControl isRequired>
+        <Textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          className="textarea border-t-0 border-x-0 focus:ring-0 focus:outline-none textarea-bordered rounded-none h-20 text-lg placeholder:p-1 placeholder:text-lg"
-          placeholder="What is happening?"
-        ></textarea>
-      </div>
-      <select
-        onChange={(e) => setCategory(e.target.value)}
-        className="select mt-1 select-sm w-fit  pl-1 rounded-none"
-      >
-        <option value={0} disabled defaultValue>
-          Pilih Kategori
-        </option>
-        <option value={'Programming'}>Programming</option>
-        <option value={'Non Progamming'}>Non Progamming</option>
-        <option value={'React js'}>React js</option>
-        <option value={'Ask'}>Ask</option>
-        <option value={'Others'}>Others</option>
-      </select>
-      <p className="text-xs inline ml-1 opacity-80">(optional)</p>
-      <div className="flex mt-2 justify-between items-center">
-        <button type="button">
-          <MdOutlineEmojiEmotions size={27} />
-        </button>
-        <button
-          type="submit"
+          placeholder={'What is happening?'}
+        ></Textarea>
+      </FormControl>
+      <Flex alignItems={'center'} gap={2}>
+        <Select
+          size={'sm'}
+          onChange={(e) => setCategory(e.target.value)}
+          w={'fit-content'}
+        >
+          <option value={0} disabled defaultValue>
+            Pilih Kategori
+          </option>
+          <option value={'Programming'}>Programming</option>
+          <option value={'Non Progamming'}>Non Progamming</option>
+          <option value={'React js'}>React js</option>
+          <option value={'Ask'}>Ask</option>
+          <option value={'Others'}>Others</option>
+        </Select>
+        <Text fontSize={'xs'} opacity={0.8}>
+          (optional)
+        </Text>
+      </Flex>
+      <Flex mt={2} justify={'space-between'} alignItems={'center'}>
+        <IconButton
+          icon={<MdOutlineEmojiEmotions size={27} />}
+          variant={'unstyled'}
+          aria-label={'Emoji Emotions'}
+        />
+        <Button
+          type={'submit'}
           onClick={createThread}
-          className="btn btn-primary  rounded-full px-5 h-9 btn-sm capitalize "
+          colorScheme={'purple'}
+          size={'sm'}
+          rounded={'full'}
+          px={5}
+          h={9}
+          textTransform={'capitalize'}
         >
           post
-        </button>
-      </div>
-    </form>
+        </Button>
+      </Flex>
+    </Box>
   );
 }
+
+CreateForm.propTypes = {
+  MdOutlineEmojiEmotions: PropTypes.func,
+  addThread: PropTypes.func,
+};

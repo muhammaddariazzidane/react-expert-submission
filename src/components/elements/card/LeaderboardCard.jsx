@@ -1,25 +1,48 @@
+import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 export default function LeaderboardCard({ index, leaderboard }) {
   return (
-    <div className="flex hover:bg-primary hover:text-white transition-colors duration-300  p-2 rounded-md justify-between items-center">
-      <div className="flex items-center gap-2">
-        <div className="avatar placeholder">
-          <h1 className="items-center m-auto text-base pr-2 font-semibold">
-            {index + 1}.
-          </h1>
-          <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
-            <img src={leaderboard.user.avatar} alt={leaderboard.user.name} />
-          </div>
-        </div>
-        <h1 className="text-base capitalize font-semibold">
+    <Flex
+      justify={'space-between'}
+      p={2}
+      alignItems={'center'}
+      rounded={'md'}
+      _hover={{
+        bg: 'purple.500',
+        color: 'white',
+        transition: '.2s ease-in-out',
+      }}
+    >
+      <Flex alignItems={'center'} gap={2}>
+        <Text as={'p'} fontSize={'md'} m={'auto'} fontWeight={'semibold'}>
+          {index + 1}.
+        </Text>
+        <Avatar
+          name={leaderboard.user.name}
+          size={'sm'}
+          src={leaderboard.user.avatar}
+        />
+        <Text
+          as={'p'}
+          fontStyle={'normal'}
+          fontSize={'md'}
+          fontWeight={'semibold'}
+        >
           {leaderboard.user.name}
-        </h1>
-      </div>
-      <div>
-        <span className="text-base font-semibold">{leaderboard.score}</span>
-      </div>
-    </div>
+        </Text>
+      </Flex>
+      <Box>
+        <Text
+          as={'p'}
+          fontStyle={'normal'}
+          fontSize={'md'}
+          fontWeight={'semibold'}
+        >
+          {leaderboard.score}
+        </Text>
+      </Box>
+    </Flex>
   );
 }
 

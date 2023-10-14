@@ -1,3 +1,4 @@
+import { Box, Text, Badge, Flex, Button, Avatar } from '@chakra-ui/react';
 import { useRef, useState, useEffect } from 'react';
 import { postedAt } from '../../../utils';
 import { Link } from 'react-router-dom';
@@ -27,58 +28,94 @@ export default function DiscussionCard(props) {
   }, [openCommentId]);
 
   return (
-    <div className="flex mt-4 flex-col gap-4">
+    <Flex mt={4} flexDir={'column'} gap={4}>
       {threads?.map((thread) => (
-        <div key={thread.id}>
-          <div className="card w-full shadow rounded-xl">
-            <div className="card-body p-4">
-              <div className="flex gap-x-2 items-center">
-                <div className="avatar placeholder">
-                  <div className="bg-neutral-focus text-neutral-content rounded-full w-8">
-                    <img src={thread.user.avatar} alt={thread.user.name} />
-                  </div>
-                </div>
-                <h1 className="text-sm">#{thread.user.name}</h1>
-                <small className="text-xs">{postedAt(thread.createdAt)}</small>
-              </div>
-              <div className="pl-10 -mt-2">
-                <Link
-                  to={`/thread/${thread.id}`}
-                  className="card-title mb-1 text-lg"
-                >
-                  {thread.title}
+        <Box key={thread.id}>
+          <Box w="full" shadow="md" rounded="xl">
+            <Box p={4}>
+              <Flex gap={2} alignItems={'center'}>
+                <Avatar
+                  hideBelow={'sm'}
+                  size={'sm'}
+                  src={thread.user.avatar}
+                  name={thread.user.name}
+                />
+                <Text fontSize="sm" as={'p'}>{`#${thread.user.name}`}</Text>
+                <Text fontSize="xs" as={'small'}>
+                  {postedAt(thread.createdAt)}
+                </Text>
+              </Flex>
+              <Box pl={{ lg: 10, base: 1, sm: 10, md: 10 }} mb={1}>
+                <Link to={`/thread/${thread.id}`} mb={1}>
+                  <Text as={'h1'} fontWeight={'semibold'}>
+                    {thread.title}
+                  </Text>
                 </Link>
-                <p>{thread.body.substr(0, 120)}...</p>
-              </div>
-              <div className="card-actions justify-between">
-                <div className="badge h-7 badge-ghost text-lime-700 ml-9">
-                  #{thread.category ? thread.category : null}
-                </div>
-                <div className="flex gap-2">
-                  <button className="flex gap-1 items-center">
+                <Text as={'p'}>{thread.body.substr(0, 120)}...</Text>
+              </Box>
+              <Flex
+                justify={'space-between'}
+                ml={{ lg: 8, base: 0 }}
+                alignItems={'end'}
+                gap={1}
+                flexWrap={'wrap'}
+              >
+                <Badge
+                  p={1}
+                  rounded={'md'}
+                  variant="subtle"
+                  colorScheme="green"
+                >
+                  {`#${thread.category ? thread.category : ''}`}
+                </Badge>
+
+                <Flex gap={2} alignItems={'end'}>
+                  <Button
+                    display="flex"
+                    variant={'unstyled'}
+                    gap={1}
+                    size={'sm'}
+                    alignItems="center"
+                  >
                     <BiLike size={23} />
                     <span>0</span>
-                  </button>
-                  <button className="flex gap-1 items-center">
+                  </Button>
+                  <Button
+                    display="flex"
+                    variant={'unstyled'}
+                    gap={1}
+                    size={'sm'}
+                    alignItems="center"
+                  >
                     <BiDislike size={23} />
                     <span>0</span>
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    display="flex"
+                    variant={'unstyled'}
+                    gap={1}
+                    size={'sm'}
+                    alignItems="center"
                     onClick={() => toggleModalComment(thread.id)}
-                    className="flex gap-1 items-center relative"
                   >
                     <BiComment size={23} />
                     <span>{thread.totalComments}</span>
-                  </button>
-                  <button className="flex gap-1 items-center">
+                  </Button>
+                  <Button
+                    display="flex"
+                    variant={'unstyled'}
+                    gap={1}
+                    size={'sm'}
+                    alignItems="center"
+                  >
                     <BiShare className="-scale-x-100" size={23} />
                     <span>0</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+                  </Button>
+                </Flex>
+              </Flex>
+            </Box>
             {openCommentId === thread.id && (
-              <div className="w-full p-2 mt-2 border-t">
+              <Box w={'full'} p={2} mt={2}>
                 <CreateCommentForm
                   handleSubmit={(e) => {
                     e.preventDefault();
@@ -90,12 +127,12 @@ export default function DiscussionCard(props) {
                   }}
                   commentTextareaRef={commentTextareaRef}
                 />
-              </div>
+              </Box>
             )}
-          </div>
-        </div>
+          </Box>
+        </Box>
       ))}
-    </div>
+    </Flex>
   );
 }
 

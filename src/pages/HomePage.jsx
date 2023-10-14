@@ -4,6 +4,7 @@ import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 import { asyncAddThread } from '../states/threads/action';
 import { MdOutlineEmojiEmotions } from 'react-icons/md';
 import { BiLike, BiDislike, BiShare, BiComment } from 'react-icons/bi';
+import { Flex, Box, Avatar, Heading, Divider } from '@chakra-ui/react';
 import CreateForm from '../components/elements/form/CreateForm';
 import Layout from '../layouts/Layout';
 import DiscussionCard from '../components/elements/card/DiscussionCard';
@@ -35,26 +36,26 @@ export default function HomePage({ authUser, signOut }) {
 
   return (
     <Layout signOut={signOut}>
-      <div className="flex w-full mt-2 justify-center space-x-4">
-        <div className="shadow p-4 w-[85%] min-h-screen  lg:mb-0 mb-14 max-w-3xl">
-          <div className="flex shadow p-4 rounded-xl justify-center gap-2">
-            <div className="lg:block hidden">
-              <div className="avatar placeholder">
-                <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
-                  <img src={authUser.avatar} alt={authUser.name} />
-                </div>
-              </div>
-            </div>
+      <Flex w={'full'} mt="2" justify={'center'} gap={4}>
+        <Box shadow="md" p={4} w={'81%'} minH={'100vh'} pb={12} maxW={'2xl'}>
+          <Flex shadow="md" p={4} rounded="xl" justifyContent="center" gap={2}>
+            <Box display={{ base: 'none', lg: 'block' }}>
+              <Avatar size={'sm'} name={authUser.name} src={authUser.avatar} />
+            </Box>
             <CreateForm
               addThread={onAddThread}
               MdOutlineEmojiEmotions={MdOutlineEmojiEmotions}
             />
-          </div>
-          <h1 className="text-xl mt-4 text-center font-semibold">
+          </Flex>
+          <Heading
+            mt={4}
+            textAlign={'center'}
+            fontSize={'xl'}
+            fontWeight={'semibold'}
+          >
             Diskusi Tersedia
-          </h1>
-          <hr className="my-3 " />
-
+          </Heading>
+          <Divider my={3} />
           <DiscussionCard
             BiComment={BiComment}
             BiDislike={BiDislike}
@@ -62,15 +63,31 @@ export default function HomePage({ authUser, signOut }) {
             BiShare={BiShare}
             threads={threadList}
           />
-        </div>
-        <div className=" w-[15%] lg:block hidden h-full  rounded-lg ">
-          <div className="w-full shadow rounded-md pb-2">
-            <h1 className="font-semibold  mt-2 text-base text-center">Top 3</h1>
-            <h1 className="font-semibold   text-base text-center">
+        </Box>
+        <Box
+          w={'19%'}
+          display={{ base: 'none', lg: 'block' }}
+          h={'100%'}
+          rounded={'lg'}
+        >
+          <Box shadow="md" rounded="md" pb={2}>
+            <Heading
+              mt={2}
+              textAlign={'center'}
+              fontSize={'md'}
+              fontWeight={'semibold'}
+            >
+              Top 3
+            </Heading>
+            <Heading
+              textAlign={'center'}
+              fontSize={'md'}
+              fontWeight={'semibold'}
+            >
               Leaderboard
-            </h1>
-            <hr className="mt-3" />
-            <div className="w-full flex p-2 gap-4  flex-col">
+            </Heading>
+            <Divider mt={3} />
+            <Flex p={2} gap={1} flexDir="column">
               {leaderboards?.slice(0, 3).map((leaderboard, index) => (
                 <LeaderboardCard
                   index={index}
@@ -78,10 +95,10 @@ export default function HomePage({ authUser, signOut }) {
                   leaderboard={leaderboard}
                 />
               ))}
-            </div>
-          </div>
-        </div>
-      </div>
+            </Flex>
+          </Box>
+        </Box>
+      </Flex>
     </Layout>
   );
 }
